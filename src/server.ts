@@ -1,25 +1,6 @@
-import 'express-async-errors';
-import 'reflect-metadata';
-import express, { NextFunction, Request, Response } from 'express';
-import { router } from './routes';
+import { app } from "./app"
+import { AppDataSource } from "./shared/database/data-source";
 
-const app = express();
-
-app.use(express.json());
-
-app.use(router);
-
-app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
-  if(err instanceof Error) {
-    return response.status(400).json({
-      error: err.message
-    })
-  }
-
-  return response.status(500).json({
-    status: "error",
-    message: "Internal Server Error"
-  })
-});
+AppDataSource.initialize().then(() => console.log("Database is running"));
 
 app.listen(3333, () => console.log("Server is running on port 3333"));
