@@ -1,30 +1,27 @@
 import dayjs from "dayjs";
-import { RefreshTokensRepository } from "../typeorm/repositories/refresh-tokens-repository";
 import auth from "../../../shared/config/auth";
+import { RefreshTokenEntity } from "../typeorm/entities/refresh-token.entity";
 
 interface IGenerateRefreshToken {
   user_id: number;
-  previous_token?: string;
 }
 
 class GenerateRefreshTokenProvider {
-  async execute({
+   execute({
     user_id,
-    previous_token,
-  }: IGenerateRefreshToken): Promise<string> {
+  }: IGenerateRefreshToken): RefreshTokenEntity {
     const expiresInDays = Number(auth.refresh.expiresIn);
 
     const expiresIn = dayjs().add(expiresInDays, "days").toDate();
 
-    const refreshTokensRepository = new RefreshTokensRepository();
+    const refreshToken = new RefreshTokenEntity();
 
-    const refreshToken = await refreshTokensRepository.create({
+    Object.assign(refreshToken, {
       user_id,
       expires_in: expiresIn,
-      previous_token,
     });
 
-    return refreshToken.refresh_token;
+    return refreshToken;
   }
 }
 

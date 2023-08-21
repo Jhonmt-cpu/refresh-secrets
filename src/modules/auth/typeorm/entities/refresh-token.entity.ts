@@ -12,8 +12,8 @@ class RefreshTokenEntity {
 
   @Column('uuid')
   @OneToOne(() => RefreshTokenEntity)
-  @JoinColumn({ name: 'previous_token', referencedColumnName: 'refresh_token' })
-  previous_token?: string;
+  @JoinColumn({ name: 'next_token', referencedColumnName: 'refresh_token' })
+  next_token?: string;
 
   @Column()
   expires_in: Date;

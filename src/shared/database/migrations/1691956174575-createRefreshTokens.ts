@@ -7,10 +7,10 @@ export class CreateRefreshTokens1691956174575 implements MigrationInterface {
       CREATE TABLE IF NOT EXISTS refresh_tokens (
         refresh_token UUID PRIMARY KEY,
         user_id INTEGER NOT NULL,
-        previous_token UUID,
+        next_token UUID,
         expires_in TIMESTAMP NOT NULL,
         FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-        FOREIGN KEY (previous_token) REFERENCES refresh_tokens(refresh_token) ON DELETE NO ACTION ON UPDATE CASCADE
+        FOREIGN KEY (next_token) REFERENCES refresh_tokens(refresh_token) ON DELETE SET NULL ON UPDATE CASCADE
       );
     `);
   }

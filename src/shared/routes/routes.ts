@@ -6,6 +6,7 @@ import { AuthenticateUserController } from "../../modules/auth/use-cases/authent
 import { ensureAuthenticated } from "../../modules/auth/middlewares/ensure-authenticated";
 import { GetUserController } from "../../modules/users/use-cases/get-user/get-user.controller";
 import { RefreshTokenController } from "../../modules/auth/use-cases/refresh-token/refresh-token.controller";
+import { SynchronizeCacheController } from "../../modules/auth/use-cases/synchronize-cache/synchronize-cache.controller";
 
 const router = Router();
 
@@ -13,6 +14,7 @@ const createUserController = new CreateUserController();
 const getUserController = new GetUserController();
 const authenticateUserController = new AuthenticateUserController();
 const refreshAccessTokenController = new RefreshTokenController();
+const synchronizeCacheController = new SynchronizeCacheController();
 
 router.post(
   "/users",
@@ -52,6 +54,12 @@ router.post(
   }),
   refreshAccessTokenController.handle,
 )
+
+router.post(
+  "/synchronize-cache",
+  ensureAuthenticated,
+  synchronizeCacheController.handle,
+);
 
 router.get("/", (request, response) => {
   return response.json({ message: "Hello World" });
