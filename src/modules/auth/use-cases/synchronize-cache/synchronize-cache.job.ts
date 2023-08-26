@@ -1,4 +1,4 @@
-import { SynchronizeCacheUseCase } from "./synchronize-cache.use-case";
+import { SynchronizeCacheUseCase } from './synchronize-cache.use-case';
 
 class SynchronizeCacheJob {
   async execute() {

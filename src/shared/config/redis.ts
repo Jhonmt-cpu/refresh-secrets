@@ -1,4 +1,4 @@
-import Redis from "ioredis";
+import Redis from 'ioredis';
 
 const redisClient = new Redis({
   password: process.env.REDIS_PASSWORD,
@@ -30,10 +30,22 @@ async function redisMultipleSet(refreshTokens: IRedisSet[]) {
   const pipeline = redisClient.pipeline();
 
   refreshTokens.forEach((refreshToken) => {
-    pipeline.set(refreshToken.key, refreshToken.value, 'EX', refreshToken.expireTime);
+    pipeline.set(
+      refreshToken.key,
+      refreshToken.value,
+      'EX',
+      refreshToken.expireTime,
+    );
   });
 
   return await pipeline.exec();
 }
 
-export { redisClient, redisSet, redisGet, redisDel, redisFlushAll, redisMultipleSet }
+export {
+  redisClient,
+  redisSet,
+  redisGet,
+  redisDel,
+  redisFlushAll,
+  redisMultipleSet,
+};

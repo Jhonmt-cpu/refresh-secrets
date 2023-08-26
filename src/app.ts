@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 import 'express-async-errors';
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import { errors } from 'celebrate';
 import { router } from './shared/routes/routes';
 import { AppError } from './shared/errors/app-error';
@@ -14,7 +14,7 @@ app.use(router);
 
 app.use(errors());
 
-app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
+app.use((err: Error, request: Request, response: Response) => {
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({
       status: 'error',

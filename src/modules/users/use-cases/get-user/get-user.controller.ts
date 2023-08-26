@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { GetUserUseCase } from "./get-user.use-case";
-import { instanceToPlain } from "class-transformer";
+import { Request, Response } from 'express';
+import { GetUserUseCase } from './get-user.use-case';
+import { instanceToPlain } from 'class-transformer';
 
 class GetUserController {
   async handle(request: Request, response: Response): Promise<Response> {

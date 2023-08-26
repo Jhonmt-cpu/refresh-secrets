@@ -8,10 +8,6 @@ export const AppDataSource = new DataSource({
   password: 'admin',
   database: 'tcc_db',
   synchronize: false,
-  entities: [
-    'src/modules/**/typeorm/entities/*.entity.ts'
-  ],
-  migrations: [
-    'src/shared/database/migrations/*.ts'
-  ],
+  entities: ['src/modules/**/typeorm/entities/*.entity.ts'],
+  migrations: ['src/shared/database/migrations/*.ts'],
 });

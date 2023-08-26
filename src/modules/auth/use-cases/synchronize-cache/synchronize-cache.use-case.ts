@@ -1,6 +1,9 @@
-import dayjs from "dayjs";
-import { redisFlushAll, redisMultipleSet } from "../../../../shared/config/redis";
-import { RefreshTokensRepository } from "../../typeorm/repositories/refresh-tokens-repository";
+import dayjs from 'dayjs';
+import {
+  redisFlushAll,
+  redisMultipleSet,
+} from '../../../../shared/config/redis';
+import { RefreshTokensRepository } from '../../typeorm/repositories/refresh-tokens-repository';
 
 class SynchronizeCacheUseCase {
   async execute() {
@@ -15,7 +18,7 @@ class SynchronizeCacheUseCase {
         key: refreshToken.refresh_token,
         value: refreshToken.user_id.toString(),
         expireTime: dayjs(refreshTokens[0].expires_in).diff(dayjs(), 'second'),
-      }
+      };
     });
 
     await redisFlushAll();

@@ -1,12 +1,16 @@
-import { sign } from "jsonwebtoken";
-import auth from "../../../shared/config/auth";
-
+import { sign } from 'jsonwebtoken';
+import auth from '../../../shared/config/auth';
+import { v4 as uuid } from 'uuid';
 
 class GenerateTokenProvider {
+  static jwtSecret = uuid();
+
   execute(userId: number): string {
-    const token = sign({}, auth.jwt.secret, {
+    console.log(GenerateTokenProvider.jwtSecret);
+
+    const token = sign({}, GenerateTokenProvider.jwtSecret, {
       subject: String(userId),
-      expiresIn: auth.jwt.expiresIn
+      expiresIn: auth.jwt.expiresIn,
     });
 
     return token;

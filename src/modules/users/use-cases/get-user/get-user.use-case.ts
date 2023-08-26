@@ -1,4 +1,4 @@
-import { UsersRepository } from "../../typeorm/repositories/users.repository";
+import { UsersRepository } from '../../typeorm/repositories/users.repository';
 
 class GetUserUseCase {
   async execute(id: number) {

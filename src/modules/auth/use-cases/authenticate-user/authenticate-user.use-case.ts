@@ -1,13 +1,14 @@
-import { compare } from "bcryptjs";
-import { AppError } from "../../../../shared/errors/app-error";
-import { GenerateTokenProvider } from "../../providers/generate-token.provider";
-import { UsersRepository } from "../../../users/typeorm/repositories/users.repository";
-import { GenerateRefreshTokenProvider } from "../../providers/generate-refresh-token.provider";
-import { RefreshTokensRepository } from "../../typeorm/repositories/refresh-tokens-repository";
-import { redisSet } from "../../../../shared/config/redis";
+import { compare } from 'bcryptjs';
+import { AppError } from '../../../../shared/errors/app-error';
+import { GenerateTokenProvider } from '../../providers/generate-token.provider';
+import { UsersRepository } from '../../../users/typeorm/repositories/users.repository';
+import { GenerateRefreshTokenProvider } from '../../providers/generate-refresh-token.provider';
+import { RefreshTokensRepository } from '../../typeorm/repositories/refresh-tokens-repository';
+import { redisSet } from '../../../../shared/config/redis';
+import { AuthenticateUserDTO } from '../../dtos/authenticate-user.dto';
 
 class AuthenticateUserUseCase {
-  async execute({email, password}: AuthenticateUserDTO) {
+  async execute({ email, password }: AuthenticateUserDTO) {
     const usersRepository = new UsersRepository();
 
     const user = await usersRepository.findByEmail(email);
@@ -34,20 +35,25 @@ class AuthenticateUserUseCase {
       user_id: user.user_id,
     });
 
-    await refreshTokensRepository.deleteAllByUserId(user.user_id)
+    await refreshTokensRepository.deleteAllByUserId(user.user_id);
 
-    await refreshTokensRepository.create(refresh_token)
+    await refreshTokensRepository.create(refresh_token);
 
-    const expiresInSeconds = Number(process.env.JWT_REFRESH_EXPIRES_IN) * 24 * 60 * 60;
+    const expiresInSeconds =
+      Number(process.env.JWT_REFRESH_EXPIRES_IN) * 24 * 60 * 60;
 
-    await redisSet(refresh_token.refresh_token, user.user_id.toString(), expiresInSeconds);
+    await redisSet(
+      refresh_token.refresh_token,
+      user.user_id.toString(),
+      expiresInSeconds,
+    );
 
     return {
       name: user.name,
       email: user.email,
       token,
       refresh_token: refresh_token.refresh_token,
-    }
+    };
   }
 }
 

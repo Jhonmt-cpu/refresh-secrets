@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { RefreshTokenUseCase } from "./refresh-token.use-case";
+import { Request, Response } from 'express';
+import { RefreshTokenUseCase } from './refresh-token.use-case';
 
 class RefreshTokenController {
   async handle(request: Request, response: Response): Promise<Response> {

@@ -1,5 +1,5 @@
-import { AppDataSource } from "../../../../shared/database/data-source";
-import { User } from "../entities/user.entity";
+import { AppDataSource } from '../../../../shared/database/data-source';
+import { User } from '../entities/user.entity';
 
 interface ICreateUser {
   name: string;
@@ -20,7 +20,7 @@ class UsersRepository {
 
   async findById(user_id: number): Promise<User | null> {
     const user = await this.repository.findOne({
-      where: { user_id }
+      where: { user_id },
     });
 
     return user;

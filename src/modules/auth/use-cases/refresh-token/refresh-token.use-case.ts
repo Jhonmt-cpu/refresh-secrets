@@ -1,9 +1,9 @@
-import { AppError } from "../../../../shared/errors/app-error";
-import { RefreshTokensRepository } from "../../typeorm/repositories/refresh-tokens-repository";
-import { GenerateRefreshTokenProvider } from "../../providers/generate-refresh-token.provider";
-import { GenerateTokenProvider } from "../../providers/generate-token.provider";
-import { redisDel, redisGet, redisSet } from "../../../../shared/config/redis";
-import { RefreshTokenEntity } from "../../typeorm/entities/refresh-token.entity";
+import { AppError } from '../../../../shared/errors/app-error';
+import { RefreshTokensRepository } from '../../typeorm/repositories/refresh-tokens-repository';
+import { GenerateRefreshTokenProvider } from '../../providers/generate-refresh-token.provider';
+import { GenerateTokenProvider } from '../../providers/generate-token.provider';
+import { redisDel, redisGet, redisSet } from '../../../../shared/config/redis';
+import { RefreshTokenEntity } from '../../typeorm/entities/refresh-token.entity';
 
 class RefreshTokenUseCase {
   refreshTokenRepository = new RefreshTokensRepository();
@@ -31,14 +31,18 @@ class RefreshTokenUseCase {
 
     const expiresInDays = Number(process.env.JWT_REFRESH_EXPIRES_IN);
 
-    await redisSet(refresh_token.refresh_token, userId.toString(), expiresInDays * 24 * 60 * 60);
+    await redisSet(
+      refresh_token.refresh_token,
+      userId.toString(),
+      expiresInDays * 24 * 60 * 60,
+    );
 
     const token = generateTokenProvider.execute(userId);
 
     return {
       token,
       refresh_token: refresh_token.refresh_token,
-    }
+    };
   }
 
   async insertNewToken(refreshToken: RefreshTokenEntity, token: string) {

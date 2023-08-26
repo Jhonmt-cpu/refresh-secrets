@@ -1,6 +1,6 @@
-import { IsNull, LessThan, MoreThan } from "typeorm";
-import { AppDataSource } from "../../../../shared/database/data-source";
-import { RefreshTokenEntity } from "../entities/refresh-token.entity";
+import { IsNull, LessThan, MoreThan } from 'typeorm';
+import { AppDataSource } from '../../../../shared/database/data-source';
+import { RefreshTokenEntity } from '../entities/refresh-token.entity';
 
 interface IUpdateNextToken {
   refresh_token: string;
@@ -9,7 +9,10 @@ interface IUpdateNextToken {
 class RefreshTokensRepository {
   private repository = AppDataSource.getRepository(RefreshTokenEntity);
 
-  async findByUserIdAndToken(user_id: number, token: string): Promise<RefreshTokenEntity | null> {
+  async findByUserIdAndToken(
+    user_id: number,
+    token: string,
+  ): Promise<RefreshTokenEntity | null> {
     const refreshToken = await this.repository.findOne({
       where: { user_id, refresh_token: token },
     });
@@ -34,12 +37,13 @@ class RefreshTokensRepository {
   async updateNextToken({
     refresh_token,
     next_token,
-  }: IUpdateNextToken) : Promise<void> {
-    const query = await this.repository.createQueryBuilder()
-    .update(RefreshTokenEntity)
-    .set({ next_token })
-    .where("refresh_token = :refresh_token", { refresh_token })
-    .execute();
+  }: IUpdateNextToken): Promise<void> {
+    await this.repository
+      .createQueryBuilder()
+      .update(RefreshTokenEntity)
+      .set({ next_token })
+      .where('refresh_token = :refresh_token', { refresh_token })
+      .execute();
   }
 
   async findLastUserTokens(): Promise<RefreshTokenEntity[]> {

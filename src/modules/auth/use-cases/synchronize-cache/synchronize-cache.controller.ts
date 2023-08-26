@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { SynchronizeCacheUseCase } from "./synchronize-cache.use-case";
+import { Request, Response } from 'express';
+import { SynchronizeCacheUseCase } from './synchronize-cache.use-case';
 
 class SynchronizeCacheController {
   async handle(request: Request, response: Response): Promise<Response> {

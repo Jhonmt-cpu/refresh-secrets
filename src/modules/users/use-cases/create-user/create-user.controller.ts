@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { CreateUserUseCase } from "./create-user.use-case";
-import { instanceToPlain } from "class-transformer";
+import { Request, Response } from 'express';
+import { CreateUserUseCase } from './create-user.use-case';
+import { instanceToPlain } from 'class-transformer';
 
 class CreateUserController {
   async handle(request: Request, response: Response): Promise<Response> {
