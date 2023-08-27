@@ -7,8 +7,8 @@
   "author": "João Mateus Alves Borges de Melo",
   "license": "Apache-2.0",
   "scripts": {
-    "start": "ts-node-dev src/server.ts",
-    "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
+    "start": "ts-node-dev ./src/shared/infra/http/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only ./src/shared/infra/http/server.ts",
     "build": "tsc",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
@@ -25,7 +25,10 @@
     "jsonwebtoken": "^9.0.1",
     "node-schedule": "^2.1.1",
     "pg": "^8.11.2",
+    "rate-limiter-flexible": "^2.4.2",
+    "redis": "^4.6.8",
     "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.8.0",
     "typeorm": "^0.3.17",
     "uuid": "^9.0.0"
   },
